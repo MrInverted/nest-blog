@@ -3,12 +3,10 @@
     "tsconfig.json": true,
     "README.md": true,
     "tsconfig.build.json": true,
-    "package-lock.json": true,
     ".prettierrc": true,
     ".eslintrc.js": true,
-    ".vscode": true,
     "node_modules": true,
-    "generated": true,
-    "nest-cli.json": true
+    "nest-cli.json": true,
+    ".vscode": true
   }
 }

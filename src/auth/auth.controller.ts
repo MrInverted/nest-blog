@@ -1,8 +1,9 @@
+import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Body, Controller, Post, HttpCode, Get, UseGuards, Headers, Patch } from '@nestjs/common';
-import { AuthChangePasswordDTO, AuthReponseMeDTO, AuthResponseLoginDTO, AuthResponseSuccessDTO, AuthUserDTO } from './auth.dto';
+
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import { AuthChangePasswordDTO, AuthReponseMeDTO, AuthResponseLoginDTO, AuthResponseSuccessDTO, AuthUserDTO } from './auth.dto';
 
 
 

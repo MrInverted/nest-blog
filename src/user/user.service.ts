@@ -1,13 +1,16 @@
-import { PrismaService } from './../prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Injectable, BadRequestException } from '@nestjs/common';
+
+import { PrismaService } from './../prisma/prisma.service';
 import { UpdateUserDTO } from './user.dto';
+
+
 
 @Injectable()
 export class UserService {
   constructor(
     private jwtService: JwtService,
-    private prisma: PrismaService
+    private prisma: PrismaService,
   ) { }
 
   async updateUser(body: UpdateUserDTO, incToken: string) {
@@ -26,5 +29,23 @@ export class UserService {
     });
 
     return { success: true, user }
+  }
+
+
+  async uploadAvatar(file: Express.Multer.File, incToken: string) {
+    const [_, token] = incToken.split(" ");
+
+    const { id } = this.jwtService.decode(token);
+
+    if (!file) throw new BadRequestException("No file");
+    const imagePath = "/uploads/" + file.filename;
+
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: { imagePath },
+      omit: { password: true }
+    });
+
+    return { success: true, imagePath, user }
   }
 }

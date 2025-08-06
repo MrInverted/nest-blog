@@ -1,4 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger"
+import { Type } from "class-transformer"
+import { IsBase64, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class UserDTO {
   @ApiProperty()
@@ -11,7 +13,7 @@ export class UserDTO {
   email: string | undefined
 
   @ApiProperty()
-  name: string | undefined
+  name: number | undefined
 
   @ApiProperty()
   age: string | undefined
@@ -21,23 +23,49 @@ export class UserDTO {
 
   @ApiProperty()
   description: string | undefined
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  imagePath: string | null
 }
 
 export class UpdateUserDTO {
   @ApiProperty()
-  email: string | undefined
+  @IsOptional()
+  @IsString()
+  email: string | null
 
   @ApiProperty()
-  name: string | undefined
+  @IsOptional()
+  @IsString()
+  name: string | null
 
   @ApiProperty()
-  age: string | undefined
+  @IsOptional()
+  @IsNumber({}, { message: "Age must be number" })
+  @Type(() => Number)
+  age: number | null
 
   @ApiProperty()
-  gender: string | undefined
+  @IsOptional()
+  @IsString()
+  gender: string | null
 
   @ApiProperty()
-  description: string | undefined
+  @IsOptional()
+  @IsString()
+  description: string | null
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  imagePath: string | null
+}
+
+export class UploadUserPhotoDTO {
+  @ApiProperty({ type: 'string', format: "binary" })
+  file: File
 }
 
 // ---------------
@@ -48,4 +76,15 @@ export class UpdateUserResponseDTO {
 
   @ApiProperty({ type: () => UserDTO })
   user: UserDTO
+}
+
+export class UploadUserAvaterResponseDTO {
+  @ApiProperty()
+  success: boolean
+
+  @ApiProperty({ type: () => UserDTO })
+  user: UserDTO
+
+  @ApiProperty()
+  imagePath: string
 }

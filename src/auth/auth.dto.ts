@@ -1,6 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { IsString, MinLength } from "class-validator"
+
 import { UserDTO } from "src/user/user.dto"
+
+
 
 export class AuthUserDTO {
   @IsString()
